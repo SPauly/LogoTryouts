@@ -1,0 +1,117 @@
+ht
+cs 
+
+to randomcolor 
+  setpencolor pick [red orange yellow green blue violet]
+end
+
+To Circle :speed 
+  randomcolor 
+  repeat 36 [
+    fd :speed
+    rt 10
+  ]
+End
+
+To GrowingCircle :initsize :stopsize :speed
+  while [:stopsize > 0] [
+    Circle :initsize
+
+    make "stopsize :stopsize - :speed
+    make "initsize :initsize + :speed
+  ]
+End
+
+To MovingCircle :initsize :stopsize :speed 
+  while [:stopsize > 0] [
+    
+    make "stopsize :stopsize - :speed
+    Circle :initsize
+    rt :speed
+    make "initsize :initsize + :speed
+  ]
+End
+
+To Art 
+  repeat 36 [
+      MovingCircle 0.1 500 0.01 
+  ]  
+End
+
+To Tunnel1 :initsize :stopsize :speed
+  make "partition :stopsize / 4
+  show :partition
+  make "half :stopsize / 2
+  show :half
+  while [:stopsize > 0] [
+    ifelse :initsize < :partition [
+        setpencolor 0
+    ]  [
+        setpencolor 4
+    ]
+    if :initsize > :half [
+        setpencolor 0
+    ]   
+    if :initsize > :half + :partition [
+        setpencolor 4
+    ]
+    repeat 36 [
+    fd :initsize
+    rt 10
+    ]
+
+    lt 90
+    fd (10*:speed)/2
+    rt 90
+
+    make "initsize :initsize + :speed
+    make "stopsize :stopsize - :speed
+  ]
+End
+
+To Tunnel2 :initsize :stopsize :speed
+  make "partition :stopsize / 4
+  show :partition
+  make "half :stopsize / 2
+  show :half
+  while [:stopsize > 0] [
+    ifelse :initsize < :partition [
+        setpencolor 4
+    ]  [
+        setpencolor 0
+    ]
+    if :initsize > :half [
+        setpencolor 4
+    ]   
+    if :initsize > :half + :partition [
+        setpencolor 0
+    ]
+    repeat 36 [
+    fd :initsize
+    rt 10
+    ]
+
+    lt 90
+    fd (10*:speed)/2
+    rt 90
+
+    make "initsize :initsize + :speed
+    make "stopsize :stopsize - :speed
+  ]
+End
+
+To Slide 
+   repeat 100 [
+   pd    
+   Tunnel1 0.1 100 0.01 
+   pu
+   home
+   pd    
+   Tunnel2 0.1 100 0.01 
+   pu
+   home
+   ]
+End
+
+Slide
+
